@@ -13,5 +13,17 @@
         "issue_type": "Suggestion",
         "priority": "Low",
         "description": "yes yes"
+    },
+    "test": {
+        "issue_type": "Suggestion",
+        "priority": "Medium priority",
+        "description": "test",
+        "submitted_by": "jari"
+    },
+    "test1": {
+        "issue_type": "Bug",
+        "priority": "Low",
+        "description": "test1",
+        "submitted_by": "jari"
     }
 }

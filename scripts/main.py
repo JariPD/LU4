@@ -29,7 +29,7 @@ def validate_login(username, password, current_window):
     if stored_hash == input_hash:  # Check if hashed password matches
         messagebox.showinfo("Login Success", f"Welcome {username}!")
         current_window.destroy()  # Close the login window
-        feedback_page = sf.FeedbackPage()
+        feedback_page = sf.FeedbackPage(username, credentials[username]['role'])
         feedback_page.mainloop()  # Open the feedbackpage
     else:
         messagebox.showerror("Login Failed", "Invalid username or password")
