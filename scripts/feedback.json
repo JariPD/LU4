@@ -8,5 +8,10 @@
         "issue_type": "Bug",
         "priority": "Medium priority",
         "description": "test_descriptionnnn"
+    },
+    "suggestions yes\t": {
+        "issue_type": "Suggestion",
+        "priority": "Low",
+        "description": "yes yes"
     }
 }

@@ -62,6 +62,3 @@ class FeedbackPage(tk.Tk):
         dm.save_credentials(feedback, self.FEEDBACK_FILE)
         messagebox.showinfo("Feedback submitted", "Succesfully submitted feedback, Thank you!") # TO-DO personalize with name
 
-
-app = FeedbackPage()
-app.mainloop()
