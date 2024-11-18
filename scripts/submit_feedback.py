@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 import data_manager as dm
+import feedback_overview as fo
 
 class FeedbackPage(tk.Tk):
     def __init__(self, username, role):
@@ -22,6 +23,10 @@ class FeedbackPage(tk.Tk):
             self.priority_dropdown = ttk.Combobox(self, textvariable=self.priority, state="readonly")
             self.priority_dropdown['values'] = ('High priority', 'Medium priority', 'Low')
             self.priority_dropdown.grid(row=0, column=1, padx=10, pady=10)
+
+            # Create the view all feedback button
+            self.view_all_button = tk.Button(self, text="View all feedback", command=lambda: fo.FeedbackOverview())
+            self.view_all_button.grid(row=7, column=0, columnspan=2, padx=10, pady=10)
 
         # Create title field label
         self.title_field_label = tk.Label(self, text="Give the problem a title")
@@ -51,8 +56,8 @@ class FeedbackPage(tk.Tk):
         title = self.title_field.get("1.0", "end-1c")
 
         # initialize and load file
-        dm.initialize_credentials_file(self.FEEDBACK_FILE)
-        feedback = dm.load_credentials(self.FEEDBACK_FILE)
+        dm.initialize_json_file(self.FEEDBACK_FILE)
+        feedback = dm.load_json(self.FEEDBACK_FILE)
 
         # Fill dictionary
         feedback[title] = {
@@ -63,6 +68,6 @@ class FeedbackPage(tk.Tk):
         }
 
         # Save to JSON
-        dm.save_credentials(feedback, self.FEEDBACK_FILE)
+        dm.save_json(feedback, self.FEEDBACK_FILE)
         messagebox.showinfo("Feedback submitted", f"Succesfully submitted feedback, Thank you {self.username}!") # TO-DO personalize with name
 

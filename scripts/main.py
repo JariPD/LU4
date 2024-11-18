@@ -5,14 +5,13 @@ import hashlib
 import data_manager as dm
 import submit_feedback as sf
 
-
 # Path to the JSON file for storing user credentials
 CREDENTIALS_FILE = "credentials.json"
 global root
 
 # Validate login credentials
 def validate_login(username, password, current_window):
-    credentials = dm.load_credentials(CREDENTIALS_FILE)
+    credentials = dm.load_json(CREDENTIALS_FILE)
 
     # Check if the user exists
     if username not in credentials:
@@ -29,8 +28,9 @@ def validate_login(username, password, current_window):
     if stored_hash == input_hash:  # Check if hashed password matches
         messagebox.showinfo("Login Success", f"Welcome {username}!")
         current_window.destroy()  # Close the login window
+
         feedback_page = sf.FeedbackPage(username, credentials[username]['role'])
-        feedback_page.mainloop()  # Open the feedbackpage
+        feedback_page.mainloop()  # Open the feedback page
     else:
         messagebox.showerror("Login Failed", "Invalid username or password")
 
@@ -42,7 +42,7 @@ def create_user(username, password):
         return
 
     # Load existing credentials
-    credentials = dm.load_credentials(CREDENTIALS_FILE)
+    credentials = dm.load_json(CREDENTIALS_FILE)
 
     # Check if the user already exists
     if username in credentials:
@@ -60,14 +60,14 @@ def create_user(username, password):
         "role": "tester"
     }
 
-    dm.save_credentials(credentials, CREDENTIALS_FILE)
+    dm.save_json(credentials, CREDENTIALS_FILE)
     messagebox.showinfo("Success", f"User '{username}' has been created successfully!")
     validate_login(username, password, root)
 
 
 # Run the login app
 def run_login_app():
-    dm.initialize_credentials_file(CREDENTIALS_FILE)  # Ensure the credentials file is ready
+    dm.initialize_json_file(CREDENTIALS_FILE)  # Ensure the credentials file is ready
 
     # Initialize the main window
     global root
