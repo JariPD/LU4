@@ -18,7 +18,7 @@ def test_initialize_credentials_file(temp_json_file):
     assert not os.path.exists(temp_json_file)
 
     # Initialize the file
-    initialize_credentials_file(temp_json_file)
+    initialize_json_file(temp_json_file)
 
     # Check the file now exists and contains an empty JSON object
     assert os.path.exists(temp_json_file)
@@ -33,7 +33,7 @@ def test_save_credentials(temp_json_file):
     credentials = {"user": "testuser", "password": "testpass", "role": "testrole"}
 
     # Save credentials
-    save_credentials(credentials, temp_json_file)
+    save_json(credentials, temp_json_file)
 
     # Verify the data was written correctly
     with open(temp_json_file, "r") as f:
@@ -50,7 +50,7 @@ def test_load_credentials(temp_json_file):
         json.dump(credentials, f)
 
     # Load credentials
-    loaded_credentials = load_credentials(temp_json_file)
+    loaded_credentials = load_json(temp_json_file)
 
     # Verify the loaded data matches the saved data
     assert loaded_credentials == credentials
