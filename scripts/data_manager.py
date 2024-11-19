@@ -13,6 +13,6 @@ def load_json(file):
         return json.load(file)
 
 # Save to JSON file
-def save_json(credentials, file):
+def save_json(dictionary, file):
     with open(file, "w") as file:
-        json.dump(credentials, file, indent=4)
+        json.dump(dictionary, file, indent=4)
