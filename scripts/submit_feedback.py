@@ -25,7 +25,7 @@ class FeedbackPage(tk.Tk):
             self.priority_dropdown.grid(row=0, column=1, padx=10, pady=10)
 
             # Create the view all feedback button
-            self.view_all_button = tk.Button(self, text="View all feedback", command=lambda: fo.FeedbackOverview())
+            self.view_all_button = tk.Button(self, text="View all feedback", command=lambda: fo.FeedbackOverview(self.role))
             self.view_all_button.grid(row=7, column=0, columnspan=2, padx=10, pady=10)
 
         # Create title field label
@@ -36,11 +36,11 @@ class FeedbackPage(tk.Tk):
         self.title_field = tk.Text(self, height=1, width=40)
         self.title_field.grid(row=3, column=0, columnspan=2, padx=10, sticky="w")
 
-        # Create text field label
+        # Create description field label
         self.description_field_label = tk.Label(self, text="Describe your feedback:")
         self.description_field_label.grid(row=4, column=0, columnspan=2, padx=10, pady=(5, 0) ,sticky="w")
 
-        # Create the text field
+        # Create the description field
         self.description_field = tk.Text(self, height=5, width=50)
         self.description_field.grid(row=5, column=0, columnspan=2)
 
@@ -75,14 +75,14 @@ class FeedbackPage(tk.Tk):
             "issue_type": issue_type,
             "priority": priority,
             "description": description,
-            "status": "",
-            "assignee": "",
+            "status": "New",
+            "assignee": "Unassigned",
             "submitted_by": self.username
         }
 
         # Save to JSON
         dm.save_json(feedback, self.FEEDBACK_FILE)
-        messagebox.showinfo("Feedback submitted", f"Succesfully submitted feedback, Thank you {self.username}!") # TO-DO personalize with name
+        messagebox.showinfo("Feedback submitted", f"Succesfully submitted feedback, Thank you {self.username}!")
 
         #clear entry fields
         self.clear_fields()
