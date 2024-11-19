@@ -1,10 +1,10 @@
 {
-    "User cant submit feedback\t": {
+    "User cant submit feedback": {
         "issue_type": "Bug",
-        "priority": "High priority",
+        "priority": "High",
         "description": "When submitting feedback user gets an error",
-        "status": "",
-        "assignee": "",
+        "status": "New",
+        "assignee": "Unassigned",
         "submitted_by": "qa-tester"
     },
     "buggy bug": {
