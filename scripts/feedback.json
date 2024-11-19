@@ -1,29 +1,18 @@
 {
-    "test_title": {
-        "issue_type": "Performance issue",
+    "User cant submit feedback\t": {
+        "issue_type": "Bug",
         "priority": "High priority",
-        "description": "description_title"
+        "description": "When submitting feedback user gets an error",
+        "status": "",
+        "assignee": "",
+        "submitted_by": "qa-tester"
     },
-    "test_bug": {
+    "buggy bug": {
         "issue_type": "Bug",
-        "priority": "Medium priority",
-        "description": "test_descriptionnnn"
-    },
-    "suggestions yes\t": {
-        "issue_type": "Suggestion",
-        "priority": "Low",
-        "description": "yes yes"
-    },
-    "test": {
-        "issue_type": "Suggestion",
-        "priority": "Medium priority",
-        "description": "test",
-        "submitted_by": "jari"
-    },
-    "test1": {
-        "issue_type": "Bug",
-        "priority": "Low",
-        "description": "test1",
+        "priority": "",
+        "description": "buggy bug that buggers",
+        "status": "",
+        "assignee": "",
         "submitted_by": "jari"
     }
 }

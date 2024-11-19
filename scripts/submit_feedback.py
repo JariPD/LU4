@@ -48,10 +48,21 @@ class FeedbackPage(tk.Tk):
         self.submit_button = tk.Button(self, text="Submit", command=self.submit_feedback)
         self.submit_button.grid(row=6, column=0, columnspan=2, padx=10, pady=10)
 
+    def clear_fields(self):
+        self.description_field.delete("1.0", tk.END)
+        self.title_field.delete("1.0", tk.END)
+        self.issue_type.set('')
+        if self.role != "tester":  # Only if priority dropdown exists
+            self.priority.set('')
+
+
     def submit_feedback(self):
         # Set value's
+        if self.role != "tester":
+            priority = self.priority_dropdown.get()
+        else:
+            priority = ""
         issue_type = self.issue_type_dropdown.get()
-        priority = self.priority_dropdown.get()
         description = self.description_field.get("1.0", "end-1c")
         title = self.title_field.get("1.0", "end-1c")
 
@@ -64,6 +75,8 @@ class FeedbackPage(tk.Tk):
             "issue_type": issue_type,
             "priority": priority,
             "description": description,
+            "status": "",
+            "assignee": "",
             "submitted_by": self.username
         }
 
@@ -71,3 +84,5 @@ class FeedbackPage(tk.Tk):
         dm.save_json(feedback, self.FEEDBACK_FILE)
         messagebox.showinfo("Feedback submitted", f"Succesfully submitted feedback, Thank you {self.username}!") # TO-DO personalize with name
 
+        #clear entry fields
+        self.clear_fields()
