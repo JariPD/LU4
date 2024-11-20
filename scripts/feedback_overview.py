@@ -17,9 +17,31 @@ class FeedbackOverview(tk.Tk):
         self.ASSIGNEE_OPTIONS = ["Jari", "John", "Alexander", "Unassigned"]
         self.PRIORITY_OPTIONS = ['Low', 'Medium', 'High', 'Critical']
 
+        # Priority order for sorting
+        self.PRIORITY_ORDER = {
+            'Critical': 0,
+            'High': 1,
+            'Medium': 2,
+            'Low': 3,
+            'N/A': 4  # Default priority for items without priority
+        }
+
         # Create main frame
         main_frame = ttk.Frame(self)
         main_frame.pack(fill=tk.BOTH, expand=1)
+
+        # Create sorting controls frame
+        sort_frame = ttk.Frame(main_frame)
+        sort_frame.pack(fill=tk.X, padx=10, pady=5)
+
+        # Add sort direction toggle
+        self.sort_ascending = tk.BooleanVar(value=True)
+        sort_direction_btn = ttk.Button(
+            sort_frame,
+            text="Toggle Sort Direction",
+            command=self.toggle_sort_direction
+        )
+        sort_direction_btn.pack(side=tk.LEFT, padx=5)
 
         # Create canvas
         self.canvas = tk.Canvas(main_frame)
@@ -41,6 +63,46 @@ class FeedbackOverview(tk.Tk):
         self.canvas.create_window((0, 0), window=self.feedback_frame, anchor="nw", width=980)
 
         # Load and display feedback
+        self.load_feedback()
+
+    def toggle_sort_direction(self):
+        """Toggle between ascending and descending sort order"""
+        self.sort_ascending.set(not self.sort_ascending.get())
+        self.refresh_feedback()
+
+    def sort_feedback_by_priority(self, feedback_data):
+        """
+        Sort feedback items by priority, handling cases where priority is not set
+        or is invalid.
+        """
+
+        def get_priority_order(item):
+            # Extract priority from the feedback item, defaulting to 'N/A' if not found
+            priority = item[1].get('priority', 'N/A')
+
+            # If priority is None or not in our priority order, treat it as 'N/A'
+            if priority not in self.PRIORITY_ORDER:
+                priority = 'N/A'
+
+            return (
+                self.PRIORITY_ORDER[priority],  # Primary sort by priority
+                item[0].lower()  # Secondary sort by title
+            )
+
+        sorted_items = sorted(
+            feedback_data.items(),
+            key=get_priority_order,
+            reverse=not self.sort_ascending.get()
+        )
+        return dict(sorted_items)
+
+    def refresh_feedback(self):
+        """Clear and reload all feedback items"""
+        # Clear existing feedback cards
+        for widget in self.feedback_frame.winfo_children():
+            widget.destroy()
+
+        # Reload feedback
         self.load_feedback()
 
     def _on_mousewheel(self, event):
@@ -175,13 +237,19 @@ class FeedbackOverview(tk.Tk):
         # Show a confirmation message
         messagebox.showinfo("Success", f"Changes for '{title}' saved successfully!")
 
+        # Refresh the display to show the new sort order
+        self.refresh_feedback()
+
     def load_feedback(self):
         # Load feedback data
         dm.initialize_json_file(self.FEEDBACK_FILE)
         feedback_data = dm.load_json(self.FEEDBACK_FILE)
 
+        # Sort feedback data by priority
+        sorted_feedback = self.sort_feedback_by_priority(feedback_data)
+
         # Create a card for each feedback item
-        for row, (title, data) in enumerate(feedback_data.items(), start=0):
+        for row, (title, data) in enumerate(sorted_feedback.items(), start=0):
             self.create_feedback_card(self.feedback_frame, title, data, row * 2)
 
     def remove_feedback(self, title, card_frame):

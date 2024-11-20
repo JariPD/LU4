@@ -14,5 +14,45 @@
         "status": "",
         "assignee": "",
         "submitted_by": "jari"
+    },
+    "test1": {
+        "issue_type": "Bug",
+        "priority": "Critical",
+        "description": "",
+        "status": "New",
+        "assignee": "Unassigned",
+        "submitted_by": "manager"
+    },
+    "test2": {
+        "issue_type": "Suggestion",
+        "priority": "High",
+        "description": "",
+        "status": "New",
+        "assignee": "Unassigned",
+        "submitted_by": "manager"
+    },
+    "test3": {
+        "issue_type": "Bug",
+        "priority": "Medium",
+        "description": "",
+        "status": "New",
+        "assignee": "Unassigned",
+        "submitted_by": "manager"
+    },
+    "test4": {
+        "issue_type": "Performance issue",
+        "priority": "Low",
+        "description": "",
+        "status": "New",
+        "assignee": "Unassigned",
+        "submitted_by": "manager"
+    },
+    "test5": {
+        "issue_type": "Bug",
+        "priority": "Critical",
+        "description": "",
+        "status": "New",
+        "assignee": "Unassigned",
+        "submitted_by": "manager"
     }
 }
