@@ -190,7 +190,6 @@ class FeedbackOverview(tk.Tk):
 
         desc_text = tk.Text(card_frame, height=3, width=80, wrap=tk.WORD)
         desc_text.insert('1.0', data.get('description', 'No description provided'))
-        desc_text.config(state='disabled')
         desc_text.grid(row=4, column=0, columnspan=3, sticky="ew", padx=5, pady=(0, 5))
 
         # Add buttons frame
@@ -202,7 +201,7 @@ class FeedbackOverview(tk.Tk):
             save_button = ttk.Button(buttons_frame, text="Save Changes",
                                      command=lambda t=title, p=priority_var,
                                                     s=status_var, tp=type_var,
-                                                    a=assignee_var: self.save_changes(t, p, s, tp, a))
+                                                    a=assignee_var, d=desc_text: self.save_changes(t, p, s, tp, a, d))
             save_button.pack(side=tk.LEFT, padx=5)
 
             # Add remove button for managers only
@@ -217,16 +216,19 @@ class FeedbackOverview(tk.Tk):
 
         return card_frame
 
-    def save_changes(self, title, priority_var, status_var, type_var, assignee_var):
+    def save_changes(self, title, priority_var, status_var, type_var, assignee_var, desc_text):
         # Load existing feedback data
         feedback_data = dm.load_json(self.FEEDBACK_FILE)
 
         # Update the specific feedback item
         if title in feedback_data:
-            feedback_data[title]['priority'] = priority_var.get()
-            feedback_data[title]['status'] = status_var.get()
-            feedback_data[title]['issue_type'] = type_var.get()
-            feedback_data[title]['assignee'] = assignee_var.get()
+            feedback_data[title].update({
+                'priority': priority_var.get(),
+                'status': status_var.get(),
+                'issue_type': type_var.get(),
+                'assignee': assignee_var.get(),
+                'description': desc_text.get('1.0', 'end-1c')  # Get text content without trailing newline
+            })
 
             # Print the updated data for this specific item
             print(f"Updated item data: {feedback_data[title]}")

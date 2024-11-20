@@ -6,7 +6,7 @@ import feedback_overview as fo
 class FeedbackPage(tk.Tk):
     def __init__(self, username, role):
         super().__init__()
-        self.title("Beta tester page")
+        self.title("Submit feedback")
         self.FEEDBACK_FILE = "feedback.json"
         self.username = username
         self.role = role
