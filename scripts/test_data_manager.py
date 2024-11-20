@@ -10,7 +10,7 @@ def temp_json_file(tmp_path):
     yield str(file_path)  # Provide the path to the test function
     # Cleanup is handled automatically by `tmp_path`
 
-def test_initialize_credentials_file(temp_json_file):
+def test_initialize_jsons_file(temp_json_file):
     """
     Test that the initialize_credentials_file function creates an empty JSON file.
     """
@@ -26,7 +26,7 @@ def test_initialize_credentials_file(temp_json_file):
         data = json.load(f)
     assert data == {}
 
-def test_save_credentials(temp_json_file):
+def test_save_json(temp_json_file):
     """
     Test that save_credentials writes data correctly to the file.
     """
@@ -40,7 +40,7 @@ def test_save_credentials(temp_json_file):
         data = json.load(f)
     assert data == credentials
 
-def test_load_credentials(temp_json_file):
+def test_load_json(temp_json_file):
     """
     Test that load_credentials reads data correctly from the file.
     """
