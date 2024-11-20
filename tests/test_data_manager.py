@@ -1,5 +1,5 @@
 import pytest
-from data_manager import *
+from scripts.data_manager import *
 
 @pytest.fixture
 def temp_json_file(tmp_path):
