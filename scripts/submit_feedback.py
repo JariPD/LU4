@@ -21,7 +21,7 @@ class FeedbackPage(tk.Tk):
             # Create priority dropdown
             self.priority = tk.StringVar()
             self.priority_dropdown = ttk.Combobox(self, textvariable=self.priority, state="readonly")
-            self.priority_dropdown['values'] = ('High priority', 'Medium priority', 'Low')
+            self.priority_dropdown['values'] = ('Low', 'Medium', 'High', 'Critical')
             self.priority_dropdown.grid(row=0, column=1, padx=10, pady=10)
 
             # Create the view all feedback button
