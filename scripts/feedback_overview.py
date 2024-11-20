@@ -131,13 +131,23 @@ class FeedbackOverview(tk.Tk):
         desc_text.config(state='disabled')
         desc_text.grid(row=4, column=0, columnspan=3, sticky="ew", padx=5, pady=(0, 5))
 
+        # Add buttons frame
+        buttons_frame = ttk.Frame(card_frame)
+        buttons_frame.grid(row=5, column=0, columnspan=3, pady=5)
+
         # Save button for roles with edit permissions
-        if self.role in ['developer', 'manager', 'support']:
-            save_button = ttk.Button(card_frame, text="Save Changes",
-                                   command=lambda t=title, p=priority_var,
-                                   s=status_var, tp=type_var,
-                                   a=assignee_var: self.save_changes(t, p, s, tp, a))
-            save_button.grid(row=5, column=0, columnspan=3, pady=5)
+        if self.role in ['developer', 'manager', 'qa-tester']:
+            save_button = ttk.Button(buttons_frame, text="Save Changes",
+                                     command=lambda t=title, p=priority_var,
+                                                    s=status_var, tp=type_var,
+                                                    a=assignee_var: self.save_changes(t, p, s, tp, a))
+            save_button.pack(side=tk.LEFT, padx=5)
+
+            # Add remove button for managers only
+            if self.role in ['qa-tester', 'manager']:
+                remove_button = ttk.Button(buttons_frame, text="Remove Feedback",
+                                           command=lambda t=title, cf=card_frame: self.remove_feedback(t, cf))
+                remove_button.pack(side=tk.LEFT, padx=5)
 
         # Separator
         separator = ttk.Separator(parent, orient='horizontal')
@@ -173,6 +183,40 @@ class FeedbackOverview(tk.Tk):
         # Create a card for each feedback item
         for row, (title, data) in enumerate(feedback_data.items(), start=0):
             self.create_feedback_card(self.feedback_frame, title, data, row * 2)
+
+    def remove_feedback(self, title, card_frame):
+        # Show confirmation dialog
+        confirm = messagebox.askyesno(
+            "Confirm Deletion",
+            f"Are you sure you want to remove the feedback titled '{title}'?\nThis action cannot be undone.",
+            icon='warning'
+        )
+
+        if confirm:
+            try:
+                # Load current feedback data
+                feedback_data = dm.load_json(self.FEEDBACK_FILE)
+
+                # Remove the feedback from the data
+                if title in feedback_data:
+                    del feedback_data[title]
+
+                    # Save updated data
+                    dm.save_json(feedback_data, self.FEEDBACK_FILE)
+
+                    # Remove the card from the UI
+                    card_frame.grid_remove()
+
+                    # Show success message
+                    messagebox.showinfo("Success", f"Feedback '{title}' has been removed successfully!")
+
+                    # Refresh the UI to prevent layout issues
+                    self.feedback_frame.update_idletasks()
+                else:
+                    messagebox.showerror("Error", f"Feedback '{title}' not found in stored data.")
+            except Exception as e:
+                messagebox.showerror("Error", f"An error occurred while removing the feedback: {str(e)}")
+
 
     def open_overview(self):
         self.mainloop()
