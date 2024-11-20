@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
-import data_manager as dm
-import feedback_overview as fo
+import scripts.data_manager as dm
+import scripts.feedback_overview as fo
 
 class FeedbackPage(tk.Tk):
     def __init__(self, username, role):
