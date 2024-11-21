@@ -196,18 +196,17 @@ class FeedbackOverview(tk.Tk):
         buttons_frame.grid(row=5, column=0, columnspan=3, pady=5)
 
         # Save button for roles with edit permissions
-        if self.role in ['developer', 'manager', 'qa-tester']:
-            save_button = ttk.Button(buttons_frame, text="Save Changes",
+        save_button = ttk.Button(buttons_frame, text="Save Changes",
                                      command=lambda t=title, p=priority_var,
                                                     s=status_var, tp=type_var,
                                                     a=assignee_var, d=desc_text: self.save_changes(t, p, s, tp, a, d))
-            save_button.pack(side=tk.LEFT, padx=5)
+        save_button.pack(side=tk.LEFT, padx=5)
 
-            # Add remove button for managers only
-            if self.role in ['qa-tester', 'manager']:
-                remove_button = ttk.Button(buttons_frame, text="Remove Feedback",
+        # Add remove button for managers only
+        if self.role in ['qa-tester', 'manager']:
+            remove_button = ttk.Button(buttons_frame, text="Remove Feedback",
                                            command=lambda t=title, cf=card_frame: self.remove_feedback(t, cf))
-                remove_button.pack(side=tk.LEFT, padx=5)
+            remove_button.pack(side=tk.LEFT, padx=5)
 
         # Separator
         separator = ttk.Separator(parent, orient='horizontal')
@@ -219,18 +218,33 @@ class FeedbackOverview(tk.Tk):
         # Load existing feedback data
         feedback_data = dm.load_json(self.FEEDBACK_FILE)
 
-        # Update the specific feedback item
-        if title in feedback_data:
-            feedback_data[title].update({
-                'priority': priority_var.get(),
-                'status': status_var.get(),
-                'issue_type': type_var.get(),
-                'assignee': assignee_var.get(),
-                'description': desc_text.get('1.0', 'end-1c')  # Get text content without trailing newline
-            })
+        # Get the current data for the specific feedback item
+        current_data = feedback_data.get(title, {})
 
-            # Print the updated data for this specific item
-            print(f"Updated item data: {feedback_data[title]}")
+        # Update the specific feedback item with role-based permissions
+        update_data = current_data.copy()
+
+        # Priority can only be edited by manager or qa-tester
+        if self.role in ['manager', 'qa-tester']:
+            update_data['priority'] = priority_var.get()
+
+        # Status can only be edited by manager or developer
+        if self.role in ['manager', 'developer']:
+            update_data['status'] = status_var.get()
+
+        # Type can be edited by manager, qa-tester, and developer
+        if self.role in ['manager', 'qa-tester', 'developer']:
+            update_data['issue_type'] = type_var.get()
+
+        # Assignee can only be edited by manager or developer
+        if self.role in ['manager', 'developer']:
+            update_data['assignee'] = assignee_var.get()
+
+        # Always allow description update
+        update_data['description'] = desc_text.get('1.0', 'end-1c')
+
+        # Update the specific feedback item
+        feedback_data[title] = update_data
 
         # Save updated data back to file
         dm.save_json(feedback_data, self.FEEDBACK_FILE)
