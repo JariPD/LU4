@@ -1,1 +1,14 @@
-{}
+{
+    "Low Priority Feedback": {
+        "priority": "Low"
+    },
+    "Critical Priority Feedback": {
+        "priority": "Critical"
+    },
+    "High Priority Feedback": {
+        "priority": "High"
+    },
+    "Medium Priority Feedback": {
+        "priority": "Medium"
+    }
+}
