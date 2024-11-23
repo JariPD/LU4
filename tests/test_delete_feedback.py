@@ -4,7 +4,7 @@ import pytest
 def feedback_app():
     return FeedbackPage(username="testuser", role="tester")
 
-def test_beta_tester_submit_feedback(feedback_app):
+def test_deleting_feedback(feedback_app):
     # Arrange
     feedback_app.issue_type.set("Bug")
     feedback_app.description_field.insert("1.0", "The game crashes when saving.")
