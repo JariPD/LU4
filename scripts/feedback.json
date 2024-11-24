@@ -1,58 +1,42 @@
 {
-    "User cant submit feedback": {
-        "issue_type": "Bug",
+    "New feature\t": {
+        "issue_type": "Suggestion",
+        "priority": "",
+        "description": "I would like the game to have mutiplayer",
+        "status": "New",
+        "assignee": "Unassigned",
+        "submitted_by": "tester"
+    },
+    "FPS issue on launch": {
+        "issue_type": "Performance issue",
         "priority": "High",
-        "description": "When submitting feedback user gets an error",
+        "description": "When launching game user gets very low fps",
+        "status": "In Progress",
+        "assignee": "John",
+        "submitted_by": "qa-tester"
+    },
+    "Player stats button not working": {
+        "issue_type": "Bug",
+        "priority": "Medium",
+        "description": "When clicking on player stats button the panel does not open",
         "status": "New",
         "assignee": "Unassigned",
         "submitted_by": "qa-tester"
     },
-    "buggy bug": {
+    "Player can not receive xp": {
         "issue_type": "Bug",
-        "priority": "",
-        "description": "buggy bug that buggers",
-        "status": "",
-        "assignee": "",
-        "submitted_by": "jari"
-    },
-    "test1": {
-        "issue_type": "Bug",
-        "priority": "Critical",
-        "description": "Test description update",
-        "status": "New",
-        "assignee": "Unassigned",
-        "submitted_by": "manager"
-    },
-    "test2": {
-        "issue_type": "Suggestion",
         "priority": "High",
-        "description": "",
+        "description": "when completing a mission player is not awarded experience points",
         "status": "New",
-        "assignee": "Unassigned",
-        "submitted_by": "manager"
+        "assignee": "John",
+        "submitted_by": "qa-tester"
     },
-    "test3": {
-        "issue_type": "Bug",
-        "priority": "Medium",
-        "description": "",
-        "status": "New",
-        "assignee": "Unassigned",
-        "submitted_by": "manager"
-    },
-    "test4": {
-        "issue_type": "Performance issue",
+    "Give player's a free starter bundle": {
+        "issue_type": "Suggestion",
         "priority": "Low",
-        "description": "",
+        "description": "I think we should give players a free starter bundle",
         "status": "New",
         "assignee": "Unassigned",
-        "submitted_by": "manager"
-    },
-    "test5": {
-        "issue_type": "Bug",
-        "priority": "Critical",
-        "description": "",
-        "status": "New",
-        "assignee": "Unassigned",
-        "submitted_by": "manager"
+        "submitted_by": "developer"
     }
 }
